@@ -1,0 +1,363 @@
+/* project css styles */
+
+:root {
+  --white-bg-color: #fff;
+  --card-bg: #ccc;
+  --body-background: #fff;
+  --card-background: #fff;
+  --card-box-shadow: rgba(0, 0, 0, 0.2);
+  --card-header-text: #797878;
+  --clear-completed-background: #e1e1e1;
+  --clear-completed-text-color: #8e8e8e;
+  --card-background-color: #ccc;
+  --grey-text-color: #ccc;
+  --dark-grey-icon-color: #919090;
+  --list-item-color: #424242;
+  --edit-item-color: #ff0;
+  --list-item-drag-color: #d6d5d5;
+  --crossed-text-color: #9b9999;
+  --drag-over-bordr-color: #c9d3e0;
+}
+
+body {
+  background: var(--body-background);
+  font-family: 'Open Sans', 'Lucida Grande', tahoma, verdana, arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.card {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid var(--card-bg);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px var(--card-box-shadow);
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  background: var(--card-background);
+  overflow: hidden;
+  max-height: 400px;
+  transition: max-height 0.3s ease;
+  padding-bottom: 40px;
+}
+
+.card.expanded {
+  max-height: none;
+}
+
+.card-body {
+  margin-bottom: 2px;
+  overflow-y: auto;
+  margin-top: auto;
+  flex-grow: 1;
+}
+
+/* card header */
+.card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.card-header h3 {
+  margin-right: 10px;
+  font-size: 18px;
+  color: var(--card-header-text);
+}
+
+.card-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--card-background-color);
+  bottom: -10px;
+}
+
+.header-icons {
+  margin-left: auto;
+}
+
+.refresh-icon {
+  width: 20px;
+  height: 20px;
+  right: 0;
+}
+
+/* card header END */
+
+/* Input field   */
+.add-item {
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.add-item input {
+  width: 100%;
+  border: none;
+  outline: none;
+  line-height: 50px;
+  font-size: 16px;
+}
+
+.add-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--grey-text-color);
+  z-index: 1;
+}
+
+input[type="text"] {
+  font-style: italic;
+}
+
+.backspace-icon {
+  width: 20px;
+  margin-left: 10px;
+  fill: var(--dark-grey-icon-color);
+}
+
+.add-item .backspace-icon {
+  width: 20px;
+  margin-left: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.checkbox-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Input field END   */
+
+/* list items  */
+.list-items {
+  display: flex;
+  cursor: pointer;
+  color: var(--list-item-color);
+  flex-direction: column;
+  align-items: flex-start;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: 0;
+  overflow: visible;
+}
+
+.list-items li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 25px;
+  color: var(--list-item-color);
+  padding: 10px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.list-items li:not(:last-child) {
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.list-items li .more-icon {
+  width: 20px;
+  margin-right: -10px;
+  transition: src 0.3s ease;
+}
+
+.list-items li:hover .more-icon {
+  cursor: move;
+  src: url('./assets/more-vert.png');
+}
+
+.list-items li .checkbox {
+  margin-right: 4px;
+}
+
+.list-items li label {
+  margin-right: 200px;
+  overflow: hidden;
+  margin-left: 8px;
+  white-space: normal;
+  width: 100%;
+}
+
+.gray-checkbox {
+  background-color: rgb(158, 158, 158);
+}
+
+.list-items li.dragging {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  opacity: 0.5;
+}
+
+.drag-over {
+  border: 2px solid var(--drag-over-bordr-color);
+}
+
+.list-items .selected {
+  background-color: var(--edit-item-color);
+  border-radius: 0;
+}
+
+.list-items .edit-mode {
+  background-color: var(--white-bg-color);
+}
+
+.edit-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+}
+
+.list-items li label.crossed-out {
+  text-decoration: line-through;
+  color: var(--grey-text-color);
+}
+
+.list-items li.selected .more-icon {
+  background-image: url('./assets/bin-icon.png');
+  transition: background-image 0.3s ease;
+}
+
+/* list items  END */
+
+/* Input field   END */
+
+/* clear items footer bottom */
+.clear-completed {
+  cursor: pointer;
+  color: var(--clear-completed-text-color);
+  background-color: var(--clear-completed-background);
+  justify-content: center;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  margin: 50px 0 0;
+  padding: 20px 0;
+  font-weight: normal;
+  font-size: 20px;
+  display: flex;
+}
+
+.clear-completed h5 {
+  margin: 0;
+}
+
+/* clear items footer bottom END */
+
+.list-items li.drag-over {
+  background-color: var(--list-item-drag-color);
+}
+
+.dragging {
+  cursor: move;
+  transition: cursor;
+}
+
+#todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+#todo-list li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 25px;
+  color: var(--list-item-color);
+  padding: 10px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+#todo-list li:not(:last-child) {
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+#todo-list li .more-icon {
+  width: 20px;
+  margin-right: -10px;
+  transition: src 0.3s ease;
+}
+
+#todo-list li:hover .more-icon {
+  cursor: move;
+  src: url('./assets/more-vert.png');
+}
+
+#todo-list li .checkbox {
+  margin-right: 4px;
+}
+
+#todo-list li label {
+  margin-right: 200px;
+  overflow: hidden;
+  margin-left: 8px;
+  white-space: normal;
+  width: 100%;
+}
+
+#todo-list li.dragging {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  opacity: 0.5;
+}
+
+#todo-list .selected {
+  background-color: var(--edit-item-color);
+}
+
+#todo-list .edit-mode {
+  background-color: var(--white-bg-color);
+}
+
+#todo-list li label.crossed-out {
+  text-decoration: line-through;
+  color: var(--crossed-text-color);
+}
+
+#todo-list li.selected .more-icon {
+  background-image: url('./assets/bin-icon.png');
+  transition: background-image 0.3s ease;
+}
+
+.card.expanded #todo-list {
+  max-height: none;
+}
+
+/* card body END */
